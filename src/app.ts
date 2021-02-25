@@ -1,6 +1,6 @@
+import "reflect-metadata";
 import { Action, createExpressServer } from "routing-controllers";
 import { UserController } from "./controllers";
-
 import getJwtPayloadByToken from "./factories/jwt-payload-factory";
 
 const app = createExpressServer({

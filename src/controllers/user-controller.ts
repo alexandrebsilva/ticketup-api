@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import {
   Controller,
   Param,
@@ -11,12 +10,25 @@ import {
   CurrentUser,
 } from "routing-controllers";
 
+import getToken from "../factories/token-factory";
+
 @Controller()
 export class UserController {
   @Get("/users")
   @Authorized(["admin", "tenant", "client"])
   getAll(@CurrentUser() user: any) {
     return user;
+  }
+  @Get("/get-token")
+  getToken() {
+    return {
+      token: getToken({
+        firstName: "Alexandre",
+        id: 1,
+        lastName: "Borges",
+        role: "admin",
+      }),
+    };
   }
 
   @Get("/users/:id")
