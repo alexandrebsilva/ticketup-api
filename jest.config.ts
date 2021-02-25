@@ -8,7 +8,7 @@ export default {
     "/node_modules/",
     "/dist/",
     "/build/",
-    "/src/index.ts",
+    "/src/server.ts",
   ],
   coverageThreshold: {
     global: {

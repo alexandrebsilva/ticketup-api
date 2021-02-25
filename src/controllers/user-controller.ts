@@ -8,14 +8,15 @@ import {
   Put,
   Delete,
   Authorized,
+  CurrentUser,
 } from "routing-controllers";
 
 @Controller()
 export class UserController {
   @Get("/users")
-  @Authorized(["POST_MODERATOaR", "qualqauer"])
-  getAll() {
-    return { teste: "teste" };
+  @Authorized(["admin", "tenant", "client"])
+  getAll(@CurrentUser() user: any) {
+    return user;
   }
 
   @Get("/users/:id")
