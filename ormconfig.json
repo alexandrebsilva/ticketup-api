@@ -9,6 +9,7 @@
   "logging": false,
   "entities": ["src/entity/**/*.ts"],
   "migrations": ["src/migration/**/*.ts"],
+  "migrationsTableName": "custom_migration_table",
   "subscribers": ["src/subscriber/**/*.ts"],
   "cli": {
     "entitiesDir": "src/entity",

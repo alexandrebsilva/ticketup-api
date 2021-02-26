@@ -25,7 +25,9 @@
     "docker:run": "docker run -d --rm -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=ticketup-db --name ticketup-postgres postgres",
     "docker:stop": "docker stop ticketup-postgres",
     "test": "jest --passWithNoTests --detectOpenHandles --noStackTrace --runInBand --forceExit",
-    "test:ci": "jest --passWithNoTests --coverage --silent --runInBand --detectOpenHandles --forceExit"
+    "test:ci": "jest --passWithNoTests --coverage --silent --runInBand --detectOpenHandles --forceExit",
+    "migration:run": "ts-node-dev ./node_modules/typeorm/cli.js migration:run",
+    "migration:revert": "ts-node-dev ./node_modules/typeorm/cli.js migration:revert"
   },
   "jest": {
     "verbose": true
