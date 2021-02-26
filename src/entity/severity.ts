@@ -1,15 +1,15 @@
 import { Entity, Column, OneToMany } from "typeorm";
 import { BaseEntity } from "./base";
-import { User } from "./user";
+import { Ticket } from "./ticket";
 
-@Entity({ name: "roles" })
-export class Role extends BaseEntity {
+@Entity({ name: "severities" })
+export class Severity extends BaseEntity {
   @Column({ nullable: false })
   name!: string;
 
   @Column({ nullable: true })
   description?: string;
 
-  @OneToMany((type) => User, (user) => user.role)
-  users?: User[];
+  @OneToMany((type) => Ticket, (ticket) => ticket.severity)
+  tickets?: Ticket[];
 }

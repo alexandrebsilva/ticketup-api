@@ -1,29 +1,49 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from "typeorm";
+import { BaseEntity } from "./base";
+import { Property } from "./property";
 import { Role } from "./role";
+import { Ticket } from "./ticket";
 
 @Entity({ name: "users" })
-export class User {
-  @PrimaryGeneratedColumn({ type: "int" })
-  id!: number;
-
+export class User extends BaseEntity {
   @Column()
   firstName!: string;
 
   @Column()
   lastName!: string;
 
+  @Column({ nullable: true })
+  birthdate!: Date;
+
   @Column()
   email!: string;
 
   @Column()
-  password!: string;
-
-  @Column()
   phone!: string;
 
-  @ManyToOne((type) => Role, (role) => role.users)
-  role!: string;
+  @Column({ default: false })
+  confirmedAccount!: boolean;
+
+  @Column({ default: false })
+  isActive!: boolean;
 
   @Column()
-  birthdate!: Date;
+  password!: string;
+
+  @ManyToOne((type) => Role, (role) => role.users)
+  role!: Role;
+
+  @OneToMany((type) => Property, (properties) => properties.user)
+  properties!: Property[];
+
+  @OneToMany((type) => Ticket, (ticket) => ticket.user)
+  tickets!: Ticket[];
 }
