@@ -26,6 +26,12 @@ export class User extends BaseEntity {
   @Column()
   email!: string;
 
+  @Column({ nullable: true })
+  cpf?: string;
+
+  @Column({ nullable: true })
+  refresh_token?: string;
+
   @Column()
   phone!: string;
 
