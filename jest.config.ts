@@ -2,7 +2,7 @@ export default {
   roots: ["<rootDir>"],
   preset: "ts-jest",
   testEnvironment: "node",
-  collectCoverageFrom: ["src/**/*.ts"],
+  collectCoverageFrom: ["/src/**/*.ts"],
   setupFilesAfterEnv: ["./tests/setup.ts"],
   coveragePathIgnorePatterns: [
     "/node_modules/",
@@ -18,5 +18,9 @@ export default {
       statements: -10,
     },
   },
-  testMatch: ["<rootDir>/test/**/*.test.ts", "<rootDir>/test/**/*.spec.ts"],
+  testMatch: [
+    "<rootDir>/tests/**/*.test.ts",
+    "<rootDir>/tests/**/*.spec.ts",
+    "<rootDir>/tests/**/*.play.ts",
+  ],
 };
