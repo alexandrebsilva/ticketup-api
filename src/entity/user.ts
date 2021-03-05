@@ -32,7 +32,13 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   refresh_token?: string;
 
-  @Column()
+  @Column({ nullable: true })
+  refresh_token_version?: number;
+
+  @Column({ length: 2, nullable: true })
+  dddPhone!: string;
+
+  @Column({ length: 9, nullable: true })
   phone!: string;
 
   @Column({ default: false })
