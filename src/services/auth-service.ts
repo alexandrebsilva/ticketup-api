@@ -19,13 +19,22 @@ export class AuthService {
     });
   }
 
-  public async verifyCredentials(loginForm: LoginPayloadReq) {
+  public async getUserByCredentials(
+    loginForm: LoginPayloadReq
+  ): Promise<User | undefined> {
     const userByEmail: User[] = await this.userRepository.find({
       where: { email: loginForm.email },
+      relations: ["role"],
     });
     if (userByEmail.length > 0) {
-      return compareTextWithHash(loginForm.password, userByEmail[0].password);
+      const isPasswordCorrect = compareTextWithHash(
+        loginForm.password,
+        userByEmail[0].password
+      );
+      if (isPasswordCorrect) {
+        return userByEmail[0];
+      }
     }
-    return false;
+    return undefined;
   }
 }

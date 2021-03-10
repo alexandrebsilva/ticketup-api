@@ -22,9 +22,18 @@ export class UserController {
 
   @Post("/login")
   async login(@Body() login: LoginPayloadReq) {
-    console.log(login);
-    const user = await this.authService.verifyCredentials(login);
-    return user;
+    const verifiedUser = await this.authService.getUserByCredentials(login);
+    if (verifiedUser) {
+      return {
+        token: this.authService.createJwt({
+          id: verifiedUser.id,
+          firstName: verifiedUser.firstName,
+          lastName: verifiedUser.lastName,
+          role: verifiedUser.role.name,
+        }),
+      };
+    }
+    return verifiedUser;
   }
 
   @Get("/:id")

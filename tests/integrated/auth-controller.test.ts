@@ -11,7 +11,6 @@ describe("Auth tests", () => {
       .post("/user/login")
       .send({ email: "ale@ale.com", password: "teste" });
 
-    console.log(result.status);
     done();
   });
 });
