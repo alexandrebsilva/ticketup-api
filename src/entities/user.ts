@@ -54,8 +54,8 @@ export class User extends BaseEntity {
   role!: Role;
 
   @OneToMany((type) => Property, (properties) => properties.user)
-  properties!: Property[];
+  properties?: Property[];
 
   @OneToMany((type) => Ticket, (ticket) => ticket.user)
-  tickets!: Ticket[];
+  tickets?: Ticket[];
 }

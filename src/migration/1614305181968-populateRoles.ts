@@ -12,14 +12,14 @@ export class populateRoles1614305181968 implements MigrationInterface {
         VALUES(1,'unknown', 'Unknown, still need to collect some more information'), (2,'low', 'Not quite important -  It can wait for action'), (3,'medium', 'Ordinay ticket'),(4,'high', 'It requires almost 100% of attention on the ticket'), (5,'critical', 'Extremely urgent');
         `);
 
-    await queryRunner.query(`INSERT INTO public.users (id,"firstName","lastName",birthdate,email,cpf,"dddPhone",phone,"password","roleId")
-      VALUES (1,'Alexandre','Borges','1995-05-12','ale@ale.com','40887268803','11','982823015','123',1);
-    `);
+    // await queryRunner.query(`INSERT INTO public.users (id,"firstName","lastName",birthdate,email,cpf,"dddPhone",phone,"password","roleId")
+    //   VALUES (1,'Alexandre','Borges','1995-05-12','ale@ale.com','40887268803','11','982823015','$2b$10$DeqQx3iEpnRfwp9WEGhK8OAPT26womUQTiFIHMvjBEbBCgqHFdHBu',1);
+    // `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DELETE FROM roles WHERE id in (1,2,3)`);
     await queryRunner.query(`DELETE FROM severities WHERE id in (1,2,3,4,5)`);
-    await queryRunner.query(`DELETE FROM users WHERE id in (1)`);
+    // await queryRunner.query(`DELETE FROM users WHERE id in (1)`);
   }
 }

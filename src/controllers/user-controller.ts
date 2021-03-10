@@ -9,26 +9,22 @@ import {
   Authorized,
   CurrentUser,
 } from "routing-controllers";
+import { LoginPayloadReq } from "../models/auth/login-payload";
+import { AuthService } from "../services";
 
-import getToken from "../factories/token-factory";
-
-@Controller()
+@Controller("/user")
 export class UserController {
-  @Get("/users")
+  private authService = new AuthService();
+  @Get("/")
   @Authorized(["admin", "tenant", "client"])
   getAll(@CurrentUser() user: any) {
     return user;
   }
-  @Get("/get-token")
-  getToken() {
-    return {
-      token: getToken({
-        firstName: "Alexandre",
-        id: 1,
-        lastName: "Borges",
-        role: "admin",
-      }),
-    };
+
+  @Post("/login")
+  async login(@Body() login: LoginPayloadReq) {
+    const user = await this.authService.verifyCredentials(login);
+    return user;
   }
 
   @Get("/users/:id")
