@@ -1,43 +1,36 @@
 import {
   Param,
-  Body,
   Get,
-  Post,
   Authorized,
   CurrentUser,
   JsonController,
 } from "routing-controllers";
-import { User } from "../entities";
-import { LoginPayloadReq } from "../models/auth/login-payload";
-import { AuthService } from "../services";
+import { JwtSignature } from "../models/auth/jwt-payload";
+import { UserService } from "../services";
 
 @JsonController("/user")
 export class UserController {
-  private authService = new AuthService();
-  @Get("/")
-  @Authorized(["admin", "tenant", "client"])
-  getAll(@CurrentUser() user: User) {
-    return user;
+  private userService;
+
+  constructor() {
+    this.userService = new UserService();
   }
 
-  @Post("/login")
-  async login(@Body() login: LoginPayloadReq) {
-    const verifiedUser = await this.authService.getUserByCredentials(login);
-    if (verifiedUser) {
-      return {
-        token: this.authService.createJwt({
-          id: verifiedUser.id,
-          firstName: verifiedUser.firstName,
-          lastName: verifiedUser.lastName,
-          role: verifiedUser.role.name,
-        }),
-      };
-    }
-    return verifiedUser;
+  @Get("/")
+  @Authorized(["admin", "tenant", "client"])
+  getLoggedUser(@CurrentUser() jwtSignature: JwtSignature) {
+    return this.userService.getUserById(jwtSignature.id);
+  }
+
+  @Get("/all")
+  @Authorized(["admin"])
+  async getAll() {
+    return this.userService.getListOfUsers();
   }
 
   @Get("/:id")
-  getOne(@Param("id") id: number) {
-    return "This action returns user #" + id;
+  @Authorized(["admin"])
+  async getOne(@Param("id") id: number) {
+    return this.userService.getUserById(id);
   }
 }

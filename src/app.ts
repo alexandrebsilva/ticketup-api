@@ -1,6 +1,10 @@
 import "reflect-metadata";
 import { Action, createExpressServer } from "routing-controllers";
-import { UserController } from "./controllers";
+import {
+  UserController,
+  AuthController,
+  TicketController,
+} from "./controllers";
 import getJwtSignatureByToken from "./factories/jwt-payload-factory";
 
 const app = createExpressServer({
@@ -25,7 +29,7 @@ const app = createExpressServer({
   },
 
   // Here we specify controllers we want to use
-  controllers: [UserController],
+  controllers: [UserController, AuthController, TicketController],
 });
 
 export { app };
