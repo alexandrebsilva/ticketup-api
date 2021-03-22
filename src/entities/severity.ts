@@ -2,6 +2,13 @@ import { Entity, Column, OneToMany } from "typeorm";
 import { BaseEntity } from "./base";
 import { Ticket } from "./ticket";
 
+export enum SeverityId {
+  unknown = 1,
+  low,
+  medium,
+  high,
+  critical,
+}
 @Entity({ name: "severities" })
 export class Severity extends BaseEntity {
   @Column({ nullable: false })

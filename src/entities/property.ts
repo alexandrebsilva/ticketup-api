@@ -19,7 +19,7 @@ export class Property extends BaseEntity {
   description?: string;
 
   @Column({ nullable: true })
-  neighbor?: string;
+  neighborhood?: string;
 
   @Column()
   zipcode!: string;
@@ -30,7 +30,7 @@ export class Property extends BaseEntity {
   @Column({ nullable: true })
   number?: string;
 
-  @ManyToOne((type) => User, (user) => user.id)
+  @ManyToOne((type) => User, (user) => user.id, { cascade: true })
   user?: User;
 
   @ManyToOne((type) => PropertyType, (propertyType) => propertyType.properties)

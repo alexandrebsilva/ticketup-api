@@ -56,6 +56,6 @@ export class User extends BaseEntity {
   @OneToMany((type) => Property, (properties) => properties.user)
   properties?: Property[];
 
-  @OneToMany((type) => Ticket, (ticket) => ticket.user)
+  @OneToMany((type) => Ticket, (ticket) => ticket.user, { cascade: true })
   tickets?: Ticket[];
 }
