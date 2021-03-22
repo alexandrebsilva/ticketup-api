@@ -1,4 +1,3 @@
-import { LoginPayloadReq } from "../models/auth/login-payload";
 import { getRepository, Repository } from "typeorm";
 import { User } from "../entities";
 
@@ -7,5 +6,12 @@ export class UserService {
   constructor() {
     this.userRepository = getRepository(User);
   }
-  public verifyCredentials(loginForm: LoginPayloadReq) {}
+
+  public async getUserById(id: number): Promise<User> {
+    return this.userRepository.findOneOrFail(id);
+  }
+
+  public async getListOfUsers(): Promise<User[]> {
+    return await this.userRepository.find();
+  }
 }
