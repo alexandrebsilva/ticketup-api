@@ -2,6 +2,13 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { BaseEntity } from "./base";
 import { Ticket } from "./ticket";
 
+export enum StatusId {
+  open = 1,
+  resolving,
+  waiting,
+  solved,
+  closed,
+}
 @Entity({ name: "ticket_status" })
 export class TicketStatus extends BaseEntity {
   @Column()
