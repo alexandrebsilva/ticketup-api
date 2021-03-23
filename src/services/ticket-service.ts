@@ -9,18 +9,20 @@ export class TicketService {
   }
 
   public async getTicketById(id: number): Promise<Ticket> {
-    return await this.ticketRepository.findOneOrFail(id);
+    return this.ticketRepository.findOneOrFail({
+      relations: ["property", "severity", "status"],
+    });
   }
 
   public async getTicketByUserId(userId: number): Promise<[Ticket[], number]> {
-    return await this.ticketRepository.findAndCount({
+    return this.ticketRepository.findAndCount({
       where: { user: userId },
       relations: ["property", "severity", "status"],
     });
   }
 
-  public async getAll() {
-    return this.ticketRepository.find();
+  public async getAll(): Promise<[Ticket[], number]> {
+    return this.ticketRepository.findAndCount();
   }
 
   public async create(ticket: Ticket): Promise<void> {

@@ -29,22 +29,24 @@ export class TicketController {
 
   @Get("/")
   async getTicketsFromUser() {
-    return this.ticketService.getAll();
+    const [payload, count] = await this.ticketService.getAll();
+    return { count, payload };
   }
 
   @Authorized(["admin"])
   @Get("/all")
   async getAll() {
-    return this.ticketService.getAll();
+    const [count, payload] = await this.ticketService.getAll();
+    return { count, payload };
   }
 
   @Authorized(["admin", "tenant"])
   @Get("/my-tickets")
   async getTicketFromCurrentUser(@CurrentUser() jwtSignature: JwtSignature) {
-    const [tickets, count] = await this.ticketService.getTicketByUserId(
+    const [payload, count] = await this.ticketService.getTicketByUserId(
       jwtSignature.id
     );
-    return { count, payload: tickets };
+    return { count, payload };
   }
 
   @Authorized(["admin", "tenant"])
