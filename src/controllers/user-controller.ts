@@ -25,7 +25,8 @@ export class UserController {
   @Get("/all")
   @Authorized(["admin"])
   async getAll() {
-    return this.userService.getListOfUsers();
+    const [users, count] = await this.userService.getListOfUsers();
+    return { count, payload: users };
   }
 
   @Get("/:id")

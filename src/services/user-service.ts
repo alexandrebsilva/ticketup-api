@@ -11,7 +11,7 @@ export class UserService {
     return this.userRepository.findOneOrFail(id);
   }
 
-  public async getListOfUsers(): Promise<User[]> {
-    return await this.userRepository.find();
+  public async getListOfUsers(): Promise<[User[], number]> {
+    return this.userRepository.findAndCount();
   }
 }
