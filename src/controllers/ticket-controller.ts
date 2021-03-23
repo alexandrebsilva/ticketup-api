@@ -7,11 +7,12 @@ import {
   CurrentUser,
   Authorized,
   BadRequestError,
+  HttpCode,
 } from "routing-controllers";
 import { Ticket } from "../entities";
 import { TicketCreateReq } from "../models";
 import { JwtSignature } from "../models/auth/jwt-payload";
-import { PropertyService, SeverityService } from "../services";
+import { PropertyService, SeverityService, UserService } from "../services";
 
 import { TicketService } from "../services/ticket-service";
 import { TicketStatusService } from "../services/ticket-status-service";
@@ -20,8 +21,10 @@ import { TicketStatusService } from "../services/ticket-status-service";
 export class TicketController {
   private ticketService;
 
+  private userService;
   constructor() {
     this.ticketService = new TicketService();
+    this.userService = new UserService();
   }
 
   @Get("/")
@@ -51,17 +54,30 @@ export class TicketController {
     const severityService = new SeverityService();
     const propertyService = new PropertyService();
 
-    const status = await ticketStatusService.getById(ticketCreateReq.statusId);
-    const severity = await severityService.getById(ticketCreateReq.severityId);
-    const property = await propertyService.getById(ticketCreateReq.propertyId);
+    try {
+      const user = await this.userService.getUserById(jwtSignature.id);
+      const status = await ticketStatusService.getById(
+        ticketCreateReq.statusId
+      );
+      const severity = await severityService.getById(
+        ticketCreateReq.severityId
+      );
+      const property = await propertyService.getById(
+        ticketCreateReq.propertyId
+      );
+      const ticket = new Ticket();
+      ticket.title = ticketCreateReq.title;
+      ticket.content = ticketCreateReq.content;
+      ticket.user = user;
+      ticket.severity = severity;
+      ticket.property = property;
+      ticket.status = status;
 
-    const ticket = new Ticket();
-    ticket.severity = severity!;
-    ticket.property = property!;
-    ticket.status = status!;
+      await this.ticketService.create(ticket);
 
-    await this.ticketService.create(ticket);
-
-    return [];
+      return { success: true, created: ticket };
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
   }
 }
