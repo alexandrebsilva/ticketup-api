@@ -39,6 +39,15 @@ export class TicketController {
   }
 
   @Authorized(["admin", "tenant"])
+  @Get("/my-tickets")
+  async getTicketFromCurrentUser(@CurrentUser() jwtSignature: JwtSignature) {
+    const [tickets, count] = await this.ticketService.getTicketByUserId(
+      jwtSignature.id
+    );
+    return { count, payload: tickets };
+  }
+
+  @Authorized(["admin", "tenant"])
   @Get("/:id")
   async getTicketById(@Param("id") id: number) {
     return this.ticketService.getTicketById(id);
