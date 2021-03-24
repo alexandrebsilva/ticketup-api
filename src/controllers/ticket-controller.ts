@@ -7,11 +7,13 @@ import {
   CurrentUser,
   Authorized,
   BadRequestError,
-  HttpCode,
+  Patch,
 } from "routing-controllers";
 import { Ticket } from "../entities";
+import { createTicketObject } from "../factories/ticket-factory";
 import { TicketCreateReq } from "../models";
 import { JwtSignature } from "../models/auth/jwt-payload";
+import { TicketUpdatableReq } from "../models/tickets";
 import { PropertyService, SeverityService, UserService } from "../services";
 
 import { TicketService } from "../services/ticket-service";
@@ -61,32 +63,31 @@ export class TicketController {
     @CurrentUser() jwtSignature: JwtSignature,
     @Body({ validate: true }) ticketCreateReq: TicketCreateReq
   ) {
-    const ticketStatusService = new TicketStatusService();
-    const severityService = new SeverityService();
-    const propertyService = new PropertyService();
-
     try {
-      const user = await this.userService.getUserById(jwtSignature.id);
-      const status = await ticketStatusService.getById(
-        ticketCreateReq.statusId
-      );
-      const severity = await severityService.getById(
-        ticketCreateReq.severityId
-      );
-      const property = await propertyService.getById(
-        ticketCreateReq.propertyId
-      );
-      const ticket = new Ticket();
-      ticket.title = ticketCreateReq.title;
-      ticket.content = ticketCreateReq.content;
-      ticket.user = user;
-      ticket.severity = severity;
-      ticket.property = property;
-      ticket.status = status;
+      const ticket = await createTicketObject(jwtSignature.id, ticketCreateReq);
 
       await this.ticketService.create(ticket);
 
       return { success: true, created: ticket };
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+  @Authorized(["admin", "tenant"])
+  @Patch("/:id")
+  async update(
+    @CurrentUser() jwtSignature: JwtSignature,
+    @Body({ validate: true }) ticketUpdateReq: TicketUpdatableReq,
+    @Param("id") id: number
+  ) {
+    try {
+      const updatedTicket = await createTicketObject(
+        jwtSignature.id,
+        ticketUpdateReq,
+        id
+      );
+      await this.ticketService.update(id, updatedTicket);
+      return { success: true };
     } catch (error) {
       throw new BadRequestError(error.message);
     }
