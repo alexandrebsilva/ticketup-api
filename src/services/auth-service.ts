@@ -4,7 +4,7 @@ import { JwtSignature } from "../models/auth/jwt-payload";
 import { LoginPayloadReq } from "../models/auth/login-payload";
 import { getRepository, Repository } from "typeorm";
 import { User } from "../entities";
-import { compareTextWithHash } from "../helpers/crypto";
+import { compareTextWithHash } from "../helpers/bcrypt";
 dotenv.config();
 
 export const name = "alexandre";

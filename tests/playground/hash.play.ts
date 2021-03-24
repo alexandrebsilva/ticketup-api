@@ -1,4 +1,4 @@
-import { encrypt } from "../../src/helpers/crypto";
+import { encrypt } from "../../src/helpers/bcrypt";
 
 describe("Example test", () => {
   it("PLAY Create a hash ", (done) => {
