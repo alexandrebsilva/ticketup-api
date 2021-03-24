@@ -1,5 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 import { Ticket } from "../entities";
+import { TicketUpdatableReq } from "../models/tickets";
 
 export class TicketService {
   private ticketRepository: Repository<Ticket>;
@@ -9,7 +10,7 @@ export class TicketService {
   }
 
   public async getTicketById(id: number): Promise<Ticket> {
-    return this.ticketRepository.findOneOrFail({
+    return this.ticketRepository.findOneOrFail(id, {
       relations: ["property", "severity", "status"],
     });
   }
@@ -27,5 +28,9 @@ export class TicketService {
 
   public async create(ticket: Ticket): Promise<void> {
     await this.ticketRepository.insert(ticket);
+  }
+
+  public async update(id: number, ticket: TicketUpdatableReq): Promise<void> {
+    await this.ticketRepository.update(id, ticket);
   }
 }
