@@ -37,8 +37,8 @@ export class populateRoles1614305181968 implements MigrationInterface {
     `);
 
     await queryRunner.query(`INSERT INTO public.properties
-    (id,"createdAt", "updatedAt", uf, description, neighborhood, zipcode, address, "number", "userId", "propertyTypeId")
-    VALUES(1,now(), now(), 'SP', 'casa simples', 'Bom Retiro', '01106090', 'Rua mathilde sa barbosa', '19', 3, 1);
+    (id,"name","createdAt", "updatedAt", uf, description, neighborhood, zipcode, address, "number", "userId", "propertyTypeId")
+    VALUES(1,'casa',now(), now(), 'SP', 'casa simples', 'Bom Retiro', '01106090', 'Rua mathilde sa barbosa', '19', 3, 1);
     `);
   }
 
