@@ -5,6 +5,7 @@ import {
   AuthController,
   TicketController,
 } from "./controllers";
+import { PropertyController } from "./controllers/property-controller";
 import getJwtSignatureByToken from "./factories/jwt-payload-factory";
 
 const app = createExpressServer({
@@ -29,7 +30,12 @@ const app = createExpressServer({
   },
 
   // Here we specify controllers we want to use
-  controllers: [UserController, AuthController, TicketController],
+  controllers: [
+    UserController,
+    AuthController,
+    TicketController,
+    PropertyController,
+  ],
 });
 
 export { app };

@@ -12,7 +12,7 @@ import {
 import { createTicketObject } from "../factories/ticket-factory";
 import { TicketCreateReq } from "../models";
 import { JwtSignature } from "../models/auth";
-import { TicketUpdatableReq } from "../models/tickets";
+import { TicketUpdateReq } from "../models/tickets";
 import { UserService } from "../services";
 import { TicketService } from "../services/ticket-service";
 
@@ -72,7 +72,7 @@ export class TicketController {
   @Patch("/:id")
   async update(
     @CurrentUser() jwtSignature: JwtSignature,
-    @Body({ validate: true }) ticketUpdateReq: TicketUpdatableReq,
+    @Body({ validate: true }) ticketUpdateReq: TicketUpdateReq,
     @Param("id") id: number
   ) {
     try {
