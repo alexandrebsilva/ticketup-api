@@ -1,7 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
-import { JwtSignature } from "../models/auth/jwt-payload";
-import { LoginPayloadReq } from "../models/auth/login-payload";
+import { JwtSignature } from "../models/auth";
+import { LoginPayloadReq } from "../models";
 import { getRepository, Repository } from "typeorm";
 import { User } from "../entities";
 import { compareTextWithHash } from "../helpers/bcrypt";

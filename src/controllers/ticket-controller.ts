@@ -9,24 +9,19 @@ import {
   BadRequestError,
   Patch,
 } from "routing-controllers";
-import { Ticket } from "../entities";
 import { createTicketObject } from "../factories/ticket-factory";
 import { TicketCreateReq } from "../models";
-import { JwtSignature } from "../models/auth/jwt-payload";
+import { JwtSignature } from "../models/auth";
 import { TicketUpdatableReq } from "../models/tickets";
-import { PropertyService, SeverityService, UserService } from "../services";
-
+import { UserService } from "../services";
 import { TicketService } from "../services/ticket-service";
-import { TicketStatusService } from "../services/ticket-status-service";
 
 @JsonController("/ticket")
 export class TicketController {
   private ticketService;
 
-  private userService;
   constructor() {
     this.ticketService = new TicketService();
-    this.userService = new UserService();
   }
 
   @Get("/")

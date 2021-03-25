@@ -1,5 +1,5 @@
 import { verify } from "jsonwebtoken";
-import { JwtSignature } from "../models/auth/jwt-payload";
+import { JwtSignature } from "../models";
 
 export default (token: string): JwtSignature => {
   try {

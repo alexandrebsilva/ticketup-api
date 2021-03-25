@@ -5,7 +5,7 @@ import {
   CurrentUser,
   JsonController,
 } from "routing-controllers";
-import { JwtSignature } from "../models/auth/jwt-payload";
+import { JwtSignature } from "../models";
 import { UserService } from "../services";
 
 @JsonController("/user")

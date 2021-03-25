@@ -1,6 +1,6 @@
 import { Body, Post, JsonController } from "routing-controllers";
 import { User } from "../entities";
-import { LoginPayloadReq } from "../models/auth/login-payload";
+import { LoginPayloadReq } from "../models";
 import { AuthService } from "../services";
 
 @JsonController("/auth")

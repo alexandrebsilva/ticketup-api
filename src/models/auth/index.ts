@@ -8,3 +8,8 @@ export type JwtSignature = {
   iat?: number;
   exp?: number;
 };
+
+export type LoginPayloadReq = {
+  email: string;
+  password: string;
+};
