@@ -15,6 +15,9 @@ export class Property extends BaseEntity {
   @Column({ nullable: false })
   uf!: string;
 
+  @Column()
+  name!: string;
+
   @Column({ nullable: true })
   description?: string;
 
@@ -28,14 +31,24 @@ export class Property extends BaseEntity {
   address!: string;
 
   @Column({ nullable: true })
+  detail!: string;
+
+  @Column({ nullable: true })
   number?: string;
 
-  @ManyToOne((type) => User, (user) => user.id, { cascade: true })
+  @ManyToOne((type) => User, (user) => user.id, {
+    cascade: true,
+    nullable: false,
+  })
   user?: User;
 
-  @ManyToOne((type) => PropertyType, (propertyType) => propertyType.properties)
+  @ManyToOne(
+    (type) => PropertyType,
+    (propertyType) => propertyType.properties,
+    { nullable: false }
+  )
   propertyType?: PropertyType;
 
   @OneToMany((type) => Ticket, (ticket) => ticket.property)
-  tickets!: Ticket[];
+  tickets?: Ticket[];
 }
