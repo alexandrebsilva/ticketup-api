@@ -1,5 +1,5 @@
 import { Ticket } from "../entities";
-import { TicketCreateReq, TicketUpdatableReq } from "../models/tickets";
+import { TicketCreateReq, TicketUpdateReq } from "../models/tickets";
 import {
   PropertyService,
   SeverityService,
@@ -9,7 +9,7 @@ import {
 } from "../services";
 export async function createTicketObject(
   userId: number,
-  ticketReq: TicketCreateReq | TicketUpdatableReq,
+  ticketReq: TicketCreateReq | TicketUpdateReq,
   ticketId?: number | undefined
 ): Promise<Ticket> {
   const userService = new UserService();
@@ -17,7 +17,7 @@ export async function createTicketObject(
   const ticketService = new TicketService();
 
   let ticket = new Ticket();
-  if (ticketReq instanceof TicketUpdatableReq) {
+  if (ticketReq instanceof TicketUpdateReq) {
     ticket = await ticketService.getTicketById(ticketId!);
   }
 

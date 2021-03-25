@@ -1,6 +1,6 @@
 import { getRepository, Repository } from "typeorm";
 import { Ticket } from "../entities";
-import { TicketUpdatableReq } from "../models/tickets";
+import { TicketUpdateReq } from "../models";
 
 export class TicketService {
   private ticketRepository: Repository<Ticket>;
@@ -30,7 +30,7 @@ export class TicketService {
     await this.ticketRepository.insert(ticket);
   }
 
-  public async update(id: number, ticket: TicketUpdatableReq): Promise<void> {
+  public async update(id: number, ticket: TicketUpdateReq): Promise<void> {
     await this.ticketRepository.update(id, ticket);
   }
 }

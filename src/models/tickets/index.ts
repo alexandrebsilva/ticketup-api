@@ -30,7 +30,7 @@ export class TicketCreateReq {
   statusId!: number;
 }
 
-export class TicketUpdatableReq {
+export class TicketUpdateReq {
   @IsOptional()
   @IsString()
   title?: string;
