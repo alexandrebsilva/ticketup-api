@@ -10,8 +10,10 @@ import getJwtSignatureByToken from "./factories/jwt-payload-factory";
 
 const app = createExpressServer({
   authorizationChecker: async (action: Action, roles: string[]) => {
-    const token = action.request.headers["authorization"];
-    if (token) {
+    const rawToken = action.request.headers["authorization"];
+
+    if (rawToken) {
+      const [_bearerString, token] = rawToken.split("Bearer ");
       try {
         const JwtSignature = getJwtSignatureByToken(token);
         if (roles.includes(JwtSignature.role)) {
@@ -29,7 +31,6 @@ const app = createExpressServer({
     return getJwtSignatureByToken(token);
   },
 
-  // Here we specify controllers we want to use
   controllers: [
     UserController,
     AuthController,

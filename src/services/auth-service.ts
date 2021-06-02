@@ -5,6 +5,7 @@ import { LoginPayloadReq } from "../models";
 import { getRepository, Repository } from "typeorm";
 import { User } from "../entities";
 import { compareTextWithHash } from "../helpers/bcrypt";
+import { ForbiddenError, UnauthorizedError } from "routing-controllers";
 dotenv.config();
 
 export const name = "alexandre";
@@ -41,6 +42,6 @@ export class AuthService {
       }
     }
 
-    throw new Error("Wrong credentials");
+    throw new UnauthorizedError("Wrong credentials");
   }
 }

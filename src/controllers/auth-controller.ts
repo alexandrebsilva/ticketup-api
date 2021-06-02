@@ -35,5 +35,4 @@ export class AuthController {
     }
     return verifiedUser;
   }
-  //forget password
 }
